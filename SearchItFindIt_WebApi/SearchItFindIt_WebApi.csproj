@@ -2,12 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-SearchItFindIt_WebApi-919741E4-8282-4E12-8484-9D8B21D3968B</UserSecretsId>
+    <UserSecretsId>aspnet-SearchItFindIt_WebApi-3636F780-6EA4-4A9E-A1F2-47BDEFD6D41E</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SearchItFindIt_Lib\SearchItFindIt_Lib.csproj" />
   </ItemGroup>
 
 </Project>
