@@ -5,6 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -73,7 +76,6 @@ namespace SearchItFindIt_WebApi.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
@@ -87,6 +89,15 @@ namespace SearchItFindIt_WebApi.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        [HttpGet]
+        [Route("User")]
+        public async Task<IActionResult> GetUser()
+        {
+            var auth = User.Identity.IsAuthenticated;
+            if (!auth) return Ok(null);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return Ok(user);
         }
     }
 }
